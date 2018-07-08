@@ -1,0 +1,25 @@
+{% extends 'layout/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}ارسال رزومه | {{ block.super }}{% endblock %}
+
+{% block headline %}
+	<h2>ارسال رزومه دانشجویی</h2>
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-md-2"></div>
+	<div class="col-md-8">
+		<form method="post" action="">
+			{% csrf_token %}
+	    	{{ form|crispy }}
+	    	{{ skill_set|crispy }}
+	    	<input type="submit" name="" value="ارسال" class="btn btn-primary">
+		</form>
+	</div>
+	<div class="col-md-2"></div>
+</div>
+
+{% endblock %}

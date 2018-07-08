@@ -1,0 +1,108 @@
+{% extends 'layout/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}داشبورد | {{ block.super }}{% endblock %}
+
+{% block headline %}
+	<h2>داشبورد</h2>
+{% endblock %}
+
+{% block content %}
+
+<!-- user information -->
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-primary">
+            <div class="panel-heading heading">اطلاعات دانشجو</div>
+
+            <div class="panel-body">
+                <ul class="list-no-style user-info">
+                    <li>
+                    	نام: <strong>{{ student.user.first_name }}</strong>
+                    </li>
+                    
+                    <li>
+                    	نام خانوادگی: <strong>{{ student.user.last_name }}</strong>
+                    </li>
+                    
+                    <li>
+                    	نام کاربری: <strong>{{ student.user.username }}</strong>
+                    </li>
+                    
+                    <li>
+                    	ایمیل: <strong>{{ student.user.email }}</strong>
+                    </li>
+                    
+                    <li>
+                    	شماره تماس: <strong>{{ student.phone }}</strong>
+                    </li>
+                    
+                    <li>
+                    	آدرس: <strong>{{ student.address }}</strong>
+                    </li>
+
+                    <li>
+                    	دانشگاه: <strong>{{ student.college }}</strong>
+                    </li>
+                </ul>
+                
+                <a class="btn btn-success" href="{% url 'students:student_update_info' %}">ویرایش</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- resumes -->
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-primary">
+            <div class="panel-heading heading">رزومه های من</div>
+
+            <div class="panel-body">
+
+                {% if resumes.count > 0 %}
+                    <ul class="list-group list-no-style">
+                        {% for resume in resumes %}
+                            <li class="list-group-item well">
+                                {{ resume }}
+                                <a class="btn btn-danger btn-sm pull-left" style="margin-right: 10px;" href="{% url 'students:resume_delete' pk=resume.pk %}" onclick="return confirm('آیا از حذف رزومه مطمئن هستید؟')">
+                                    حذف
+                                </a>
+                                <a class="btn btn-warning btn-sm pull-left" href="{% url 'students:resume_update' pk=resume.pk %}">
+                                    ویرایش
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>
+                        شما هیچ رزومه ای را ارسال نکرده اید.
+                    </p>
+                {% endif %}
+
+                <hr>
+                <a class="btn btn-primary" href="{% url 'students:resumes' %}">مشاهده همه رزومه ها</a>
+                <a class="btn btn-success" href="{% url 'students:resume_create' %}">ارسال رزومه جدید</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- send document -->
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-primary">
+            <div class="panel-heading heading">ارسال داکیومنت</div>
+
+            <div class="panel-body">
+                <form method="post" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <input type="submit" value="ارسال" class="btn btn-primary">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

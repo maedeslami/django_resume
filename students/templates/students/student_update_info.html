@@ -1,0 +1,29 @@
+{% extends 'layout/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}ویرایش اطلاعات دانشجو | {{ block.super }}{% endblock %}
+
+{% block headline %}
+	<h2>ویرایش اطلاعات دانشجو</h2>
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-primary">
+            <div class="panel-heading heading">ویرایش اطلاعات دانشجو</div>
+            <div class="panel-body">
+                <form method="post" action="">
+                    {% csrf_token %}
+                    {{ user_form|crispy }}
+                    {{ student_form|crispy }}
+                    <input type="submit" value="بروزرسانی" class="btn btn-success">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

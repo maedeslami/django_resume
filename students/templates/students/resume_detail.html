@@ -1,0 +1,92 @@
+{% extends 'layout/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ resume }} | {{ block.super }}{% endblock %}
+
+{% block headline %}
+	<h2>{{ resume }}</h2>
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-md-6">
+		<h3>مشخصات</h3>
+		<ul class="list-group list-no-style">
+			<li class="list-group-item">نام: {{ resume.student.user.first_name }}</li>
+			<li class="list-group-item">
+				نام خانوادگی: {{ resume.student.user.last_name }}
+			</li>
+			<li class="list-group-item">سن: {{ resume.student.age }}</li>
+			<li class="list-group-item">آدرس: {{ resume.student.address }}</li>
+			<li class="list-group-item">شماره تماس: {{ resume.student.phone }}</li>
+			<li class="list-group-item">دانشگاه: {{ resume.student.college }}</li>
+		</ul>
+	</div>
+	<div class="col-md-6">
+		<h3>تخصص ها</h3>
+		<ul class="list-group">
+			{% for skill in resume.skill_set.all %}
+				<li class="list-group-item">
+					<strong>{{ skill.name }}</strong>
+					<span class="pull-left">سطح: {{ skill.level }}</span>
+
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<h4>توضیحات</h4>
+		<p>
+			{{ resume.description|linebreaks }}	
+		</p>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<hr>
+		<h3 class="well text-center">نظرات</h3>
+		{% for comment in resume.comment_set.all %}
+			<div class="panel panel-info">
+				<div class="panel-heading">
+					<a href="{% url 'students:comment_delete' pk=comment.pk %}" class="close pull-right" aria-hidden="true">&times;</a>
+					<h1 class="panel-title">
+						&nbsp;{{ comment.student.user }}
+						در تاریخ
+						{{ comment.date }}
+
+					</h1>
+				</div>
+				<div class="panel-body">
+					<p class="bg-primary" style="padding: 15px">
+						<strong>{{ comment.text|linebreaks }}</strong>
+					</p>
+				</div>	
+			</div>
+		{% endfor %}
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col-sm-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h1 class="panel-title">ارسال نظر</h1>
+			</div>
+			<div class="panel-body">
+				<form method="post" action="">
+					{% csrf_token %}
+					{{ form|crispy }}
+					<input type="submit" value="ارسال" class="btn btn-primary">
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

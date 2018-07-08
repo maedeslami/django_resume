@@ -1,0 +1,53 @@
+{% extends 'layout/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}لیست | {{ block.super }}{% endblock %}
+
+{% block headline %}
+	<h2>لیست رزومه های ارسال شده</h2>
+{% endblock %}
+
+{% block content %}
+
+<!-- resumes -->
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-primary">
+            <div class="panel-heading heading">رزومه های ارسال شده</div>
+
+            <div class="panel-body">
+
+                {% if resumes.count > 0 %}
+                    <ul class="list-group list-no-style">
+                        {% for resume in resumes %}
+                            <li class="list-group-item well">
+                                
+                                <a href="{% url 'students:resume_detail' pk=resume.pk %}">{{ resume }}</a>
+                                
+                                {% if resume.student.user == request.user %}
+	                                <a class="btn btn-danger btn-sm pull-left" style="margin-right: 10px;" href="{% url 'students:resume_delete' pk=resume.pk %}" onclick="return confirm('آیا از حذف رزومه مطمئن هستید؟')">
+	                                    حذف
+	                                </a>
+	                                
+	                                <a class="btn btn-warning btn-sm pull-left" href="{% url 'students:resume_update' pk=resume.pk %}">
+	                                    ویرایش
+	                                </a>
+	                            {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>
+                        هیچ رزومه ای برای نمایش وجود ندارد.
+                    </p>
+                {% endif %}
+
+                <hr>
+                <a class="btn btn-primary" href="{% url 'students:resume_create' %}">ارسال رزومه جدید</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
