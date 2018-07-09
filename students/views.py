@@ -28,8 +28,6 @@ def login_view(request):
 			if user is not None and user.is_active:
 				login(request, user)
 				return redirect(reverse_lazy('students:home'))
-			else:
-				messages.error('اعتبارسنجی کاربر امکام پذیر نمی باشد.')
 	else:
 		form = forms.LoginForm()
 	return render(request, 'students/login.html', {'form': form})
@@ -41,15 +39,15 @@ def signup(request):
 		return redirect(reverse_lazy('students:home'))
 
 	if request.method == 'POST':
-		form = forms.SignUpForm(request.POST or None)
+		form = forms.SignUpForm(data=request.POST or None)
 
 		if form.is_valid():
 			form.save()
 			messages.success(request,
 				'شما با موفقیت در سایت ثبت نام کردید. اکنون می توانید وارد سایت شوید.')
 			return redirect(reverse_lazy('students:login'))
-
-	form = forms.SignUpForm()
+	else:
+		form = forms.SignUpForm()
 	return render(request, 'students/signup.html', {'form': form})
 
 
@@ -62,18 +60,7 @@ def logout_view(request):
 
 
 def home(request):
-	filename = 'home_content.txt'
-	if os.path.exists(filename):
-		with open(filename) as f:
-			header = f.readline()
-			home_content = f.read()
-	else:
-		header = "XYZ"
-		home_content = """XYZ
-		"""
-
-	return render(request, 'students/home.html',
-		{'header': header, 'home_content': home_content})
+	return render(request, 'students/home.html', {})
 
 
 

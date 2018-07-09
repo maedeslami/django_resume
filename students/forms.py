@@ -33,6 +33,7 @@ class SignUpForm(UserCreationForm):
 
 	error_messages = {
         'password_mismatch': "رمز عبور وارد شده و تکرار آن یکسان نیستند.",
+        'duplicate_username': 'این نام کاربری قبلا استفاده شده است.',
     }
 
 	def save(self, *args, **kwargs):

@@ -77,7 +77,7 @@
         {% if messages %}
             <ul class="messages list-no-style">
                 {% for message in messages %}
-                    <li class="no-style text-center {% if message.tags %} alert alert-{{ message.tags }}{% endif %}">
+                    <li class="text-center {% if message.tags %} alert alert-{{ message.tags }}{% endif %}">
                         {{ message }}
                     </li>
                 {% endfor %}
