@@ -10,16 +10,20 @@
 {% block content %}
 
 <div class="row">
-	<div class="col-md-2"></div>
-	<div class="col-md-8">
-		<form method="post" action="">
-			{% csrf_token %}
-	    	{{ form|crispy }}
-	    	{{ skill_set|crispy }}
-	    	<input type="submit" name="" value="ارسال" class="btn btn-primary">
-		</form>
-	</div>
-	<div class="col-md-2"></div>
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-primary">
+            <div class="panel-heading heading">ارسال رزومه</div>
+			
+			<div class="panel-body">
+				<form method="post" action="">
+					{% csrf_token %}
+			    	{{ form|crispy }}
+			    	{{ skill_set|crispy }}
+			    	<input type="submit" name="" value="ارسال" class="btn btn-primary">
+				</form>            
+            </div>
+        </div>
+    </div>
 </div>
 
 {% endblock %}

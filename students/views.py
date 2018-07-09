@@ -224,7 +224,7 @@ def student_update_info(request):
 @login_required
 def comment_delete(request, pk):
 	comment = get_object_or_404(models.Comment, pk=pk)
-	if comment.resume.student.user == request.user:
+	if comment.student.user == request.user:
 		comment.delete()
 	return redirect(reverse_lazy('students:resume_detail',
 		kwargs={'pk': comment.resume.pk}))

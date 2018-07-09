@@ -9,10 +9,20 @@
 
 {% block content %}
 
-	<form method="post" action="">
-		{% csrf_token %}
-    	{{ form|crispy }}
-    	<input type="submit" name="" value="ورود" class="btn btn-primary">
-	</form>
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-primary">
+            <div class="panel-heading heading">ورود دانشجو</div>
+			
+			<div class="panel-body">
+				<form method="post" action="">
+					{% csrf_token %}
+	    			{{ form|crispy }}
+	    			<input type="submit" name="" value="ورود" class="btn btn-primary">
+				</form>            
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
