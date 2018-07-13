@@ -189,16 +189,6 @@ def resume_delete(request, pk):
 
 
 @login_required
-def send_document(request):
-	if request.method == 'POST':
-		pass
-	else:
-		form = forms.DocumentForm()
-	return render(request, 'students/send_document.html', {'form': form})
-
-
-
-@login_required
 def student_update_info(request):
 	student = models.Student.objects.filter(user=request.user).first()
 
